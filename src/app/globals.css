@@ -70,3 +70,6 @@
     @apply text-3xl font-bold;
   }
 }
+img {
+  aspect-ratio: 3/4;
+}
