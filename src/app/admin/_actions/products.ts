@@ -105,3 +105,12 @@ export async function updateProduct(
   redirect("/admin/products");
 }
 
+export async function toggleProductAvailability(
+  id: string,
+  isAvailableForPurchase: boolean
+) {
+  await prisma.product.update({
+    where: { id },
+    data: { isAvailableForPurchase },
+  });
+}
