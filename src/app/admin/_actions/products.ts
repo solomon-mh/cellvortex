@@ -114,3 +114,16 @@ export async function toggleProductAvailability(
     data: { isAvailableForPurchase },
   });
 }
+
+export async function deleteProduct(id: string) {
+  const product = await prisma.product.findUnique({ where: { id } });
+
+  if (!product) return notFound();
+  await prisma.product.delete({ where: { id } });
+
+  // Handle non-existent files gracefully
+  await fs.unlink(`public/${product.imagePath}`).catch(() => {});
+  await fs.unlink(product.filePath).catch(() => {
+    console.log("can't unlik");
+  });
+}
