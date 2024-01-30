@@ -21,6 +21,7 @@ async function getSalesData() {
     numOfSales: data._count,
   };
 }
+
 async function getUserData() {
   const [userCount, orderData] = await Promise.all([
     prisma.user.count(),
@@ -36,6 +37,7 @@ async function getUserData() {
         : (orderData._sum.pricePaidInCents || 0 / userCount) / 100,
   };
 }
+
 async function getProductData() {
   const [activeCount, inActiveCount] = await Promise.all([
     prisma.product.count({ where: { isAvailableForPurchase: true } }),
@@ -52,6 +54,10 @@ const AdminDashboard = async () => {
     getProductData(),
   ]);
 
+  const inActiveProductStyle = {
+    color: productData.inActiveCount >= 1 ? "red" : "inherit",
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <DashboardCard
@@ -65,9 +71,10 @@ const AdminDashboard = async () => {
         body={usersData.averageValuePerUser}
       />
       <DashboardCard
-        title="Active Products"
-        subtitle={productData.inActiveCount}
-        body={productData.activeCount}
+        title="Products"
+        subtitle={`${productData.inActiveCount} InActive Products`}
+        body={`${productData.activeCount} Active Products`}
+        subtitleStyle={inActiveProductStyle}
       />
     </div>
   );
@@ -75,28 +82,31 @@ const AdminDashboard = async () => {
 
 type DashboardCardProps = {
   title: string;
-  subtitle: number;
-  body: number;
+  subtitle: string | number;
+  body: string | number;
+  subtitleStyle?: React.CSSProperties;
 };
-export function DashboardCard({ title, subtitle, body }: DashboardCardProps) {
+
+export function DashboardCard({
+  title,
+  subtitle,
+  body,
+  subtitleStyle,
+}: DashboardCardProps) {
   return (
     <Card>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
-        <CardDescription>{subtitle}</CardDescription>
+        <CardDescription style={subtitleStyle}>{subtitle}</CardDescription>
       </CardHeader>
-      <CardContent>
-        <p>{body}</p>
-      </CardContent>
-      <CardFooter>
-        <p>{title}</p>
-      </CardFooter>
+      <CardContent>{body}</CardContent>
+      <CardFooter>{title}</CardFooter>
     </Card>
   );
 }
 
 export default AdminDashboard;
+
 function wait(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
-

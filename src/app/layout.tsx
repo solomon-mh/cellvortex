@@ -23,7 +23,7 @@ export default function RootLayout({
           inter.variable
         )}
       >
-        {children}
+        <main>{children}</main>
       </body>
     </html>
   );
