@@ -5,6 +5,7 @@ import {
   deleteProduct,
   toggleProductAvailability,
 } from "../../_actions/products";
+import { useRouter } from "next/navigation";
 
 export function ActiveTogglerDropdownItem({
   id,
@@ -13,6 +14,8 @@ export function ActiveTogglerDropdownItem({
   id: string;
   isAvailableForPurchase: boolean;
 }) {
+  const router = useRouter();
+  router.refresh();
   const [isPending, startTransiton] = useTransition();
   return (
     <DropdownMenuItem
@@ -36,6 +39,9 @@ export function DeleteDropdownItem({
   id: string;
   disabled: boolean;
 }) {
+  const router = useRouter();
+  router.refresh();
+
   const [isPending, startTransiton] = useTransition();
   return (
     <DropdownMenuItem
