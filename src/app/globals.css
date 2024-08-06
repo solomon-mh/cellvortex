@@ -73,3 +73,12 @@
 img {
   aspect-ratio: 3/4;
 }
+@font-face {
+  font-family: "GreyQo-Regular";
+  src: url("/fonts/Ga_Maamli/GaMaamli-Regular.ttf") format("truetype"),
+    url("/fonts/Foldit/static/Foldit-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal; /* Adjust if necessary */
+}
+body {
+  font-family: "GreyQo-Regular", sans-serif !important;
+}
