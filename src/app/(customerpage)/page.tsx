@@ -1,77 +1,80 @@
+"use client";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import Hero from "./_components/Hero";
 
 export default function Home() {
+  // Define motion variants for different sections
+
+  const featureVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.6, delay: 0.3 },
+    },
+  };
+
+  const productVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.7, delay: 0.3 } },
+  };
+
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative flex items-center justify-center h-screen bg-gradient-to-r from-blue-500 to-purple-500 text-white">
-        <div className="text-center">
-          <h1 className="text-5xl font-bold mb-4">
-            Experience the Future of Communication
-          </h1>
-          <p className="text-lg mb-8">
-            Discover our latest range of smartphones with cutting-edge
-            technology.
-          </p>
-          <Link
-            href="/products"
-            className="bg-white text-blue-500 px-6 py-3 rounded-lg shadow-lg font-semibold"
-          >
-            Shop Now
-          </Link>
-        </div>
-      </section>
-
+      {/*HERO SECTION  */}
+      <Hero />
       {/* Features Section */}
       <section className="py-12 bg-gray-100 text-gray-700">
         <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-8">Why Choose Our Phones?</h2>
+          <motion.h2
+            className="text-3xl font-bold mb-8"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            Why Choose Our Phones?
+          </motion.h2>
           <div className="flex flex-wrap justify-center items-center gap-8">
-            <div className="w-1/3 p-4">
-              <Image
-                src={""}
-                alt="Feature 1"
-                width={300}
-                height={200}
-                className="rounded-lg shadow-lg"
-              />
-              <h3 className="text-xl font-semibold mt-4">Advanced Cameras</h3>
-              <p>
-                Capture stunning photos with our state-of-the-art camera
-                technology.
-              </p>
-            </div>
-            <div className="w-1/3 p-4">
-              <Image
-                src={""}
-                alt="Feature 2"
-                width={300}
-                height={200}
-                className="rounded-lg shadow-lg"
-              />
-              <h3 className="text-xl font-semibold mt-4">
-                Long-lasting Battery
-              </h3>
-              <p>
-                Enjoy extended battery life that keeps you connected all day
-                long.
-              </p>
-            </div>
-            <div className="w-1/3 p-4">
-              <Image
-                src={""}
-                alt="Feature 3"
-                width={300}
-                height={200}
-                className="rounded-lg shadow-lg"
-              />
-              <h3 className="text-xl font-semibold mt-4">Fast Performance</h3>
-              <p>
-                Experience smooth and fast performance with our latest
-                processors.
-              </p>
-            </div>
+            {[
+              {
+                src: "/path/to/feature1.png",
+                title: "Advanced Cameras",
+                description:
+                  "Capture stunning photos with our state-of-the-art camera technology.",
+              },
+              {
+                src: "/path/to/feature2.png",
+                title: "Long-lasting Battery",
+                description:
+                  "Enjoy extended battery life that keeps you connected all day long.",
+              },
+              {
+                src: "/path/to/feature3.png",
+                title: "Fast Performance",
+                description:
+                  "Experience smooth and fast performance with our latest processors.",
+              },
+            ].map((feature, index) => (
+              <motion.div
+                key={index}
+                className="w-1/3 p-4"
+                initial="hidden"
+                whileInView="visible"
+                variants={featureVariants}
+              >
+                <Image
+                  src={feature.src}
+                  alt={feature.title}
+                  width={300}
+                  height={200}
+                  className="rounded-lg shadow-lg"
+                />
+                <h3 className="text-xl font-semibold mt-4">{feature.title}</h3>
+                <p>{feature.description}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -79,59 +82,56 @@ export default function Home() {
       {/* Products Section */}
       <section className="py-12 bg-white text-gray-700">
         <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-8">Our Latest Models</h2>
+          <motion.h2
+            className="text-3xl font-bold mb-8"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            Our Latest Models
+          </motion.h2>
           <div className="flex flex-wrap justify-center items-center gap-8">
-            <div className="w-1/3 p-4">
-              <Image
-                src={""}
-                alt="Phone 1"
-                width={300}
-                height={400}
-                className="rounded-lg shadow-lg"
-              />
-              <h3 className="text-xl font-semibold mt-4">Model X</h3>
-              <p>From $999</p>
-              <Link
-                href="/products/model-x"
-                className="text-blue-500 mt-2 inline-block"
+            {[
+              {
+                model: "Model X",
+                price: "From $999",
+                href: "/products/model-x",
+              },
+              {
+                model: "Model Y",
+                price: "From $799",
+                href: "/products/model-y",
+              },
+              {
+                model: "Model Z",
+                price: "From $699",
+                href: "/products/model-z",
+              },
+            ].map((product, index) => (
+              <motion.div
+                key={index}
+                className="w-1/3 p-4"
+                initial="hidden"
+                whileInView="visible"
+                variants={productVariants}
               >
-                Learn More
-              </Link>
-            </div>
-            <div className="w-1/3 p-4">
-              <Image
-                src={""}
-                alt="Phone 2"
-                width={300}
-                height={400}
-                className="rounded-lg shadow-lg"
-              />
-              <h3 className="text-xl font-semibold mt-4">Model Y</h3>
-              <p>From $799</p>
-              <Link
-                href="/products/model-y"
-                className="text-blue-500 mt-2 inline-block"
-              >
-                Learn More
-              </Link>
-            </div>
-            <div className="w-1/3 p-4">
-              <Image
-                src={""}
-                alt="Phone 3"
-                width={300}
-                height={400}
-                className="rounded-lg shadow-lg"
-              />
-              <h3 className="text-xl font-semibold mt-4">Model Z</h3>
-              <p>From $699</p>
-              <Link
-                href="/products/model-z"
-                className="text-blue-500 mt-2 inline-block"
-              >
-                Learn More
-              </Link>
-            </div>
+                <Image
+                  src={`/path/to/${product.model.toLowerCase()}.png`}
+                  alt={product.model}
+                  width={300}
+                  height={400}
+                  className="rounded-lg shadow-lg"
+                />
+                <h3 className="text-xl font-semibold mt-4">{product.model}</h3>
+                <p>{product.price}</p>
+                <Link
+                  href={product.href}
+                  className="text-blue-500 mt-2 inline-block"
+                >
+                  Learn More
+                </Link>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -139,18 +139,27 @@ export default function Home() {
       {/* Footer */}
       <footer className="py-6 bg-gray-800 text-gray-300">
         <div className="container mx-auto px-6 text-center">
-          <p>&copy; 2024 Phone Company. All rights reserved.</p>
-          <div className="flex justify-center mt-4">
-            <Link href="#" className="mx-2">
-              Facebook
-            </Link>
-            <Link href="#" className="mx-2">
-              Twitter
-            </Link>
-            <Link href="#" className="mx-2">
-              Instagram
-            </Link>
-          </div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.2 }}
+          >
+            &copy; 2024 Phone Company. All rights reserved.
+          </motion.p>
+          <motion.div className="flex justify-center mt-4">
+            {["Facebook", "Twitter", "Instagram"].map((platform, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="mx-2"
+              >
+                <Link href="#" className="text-blue-500">
+                  {platform}
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </footer>
     </div>
