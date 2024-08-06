@@ -1,18 +1,23 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ProductCard from "./_components/ProductCard";
-import { getLatestProduct, getPopularProduct } from "@/lib/product";
+import { getLatestProducts, getPopularProducts } from "@/lib/product";
+import ProductCardSkeleton from "./_components/ProductCardSkeleton";
 
 const ProductsPage = async () => {
-  const latestProduct = await getLatestProduct();
-  const popularProduct = await getPopularProduct();
+  const latestProduct = await getLatestProducts();
+  const popularProduct = await getPopularProducts();
 
   return (
-    <div className="my-16">
-      <h1 className="text-center border-b-2 py-2 mb-1">Xp,Latest Products</h1>
-      <ProductCard card={latestProduct} />
-      <h1 className="text-center border-b-2 py-2 mb-1">Our Famous Products</h1>
-      <ProductCard card={popularProduct} />
-    </div>
+    <Suspense fallback={<ProductCardSkeleton />}>
+      <div className="my-16">
+        <h1 className="text-center border-b-2 py-2 mb-1">Xp,Latest Products</h1>
+        <ProductCard card={latestProduct} />
+        <h1 className="text-center border-b-2 py-2 mb-1">
+          Our Famous Products
+        </h1>
+        <ProductCard card={popularProduct} />
+      </div>
+    </Suspense>
   );
 };
 
