@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
-
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  // your code here
+export async function POST(request: Request) {
+  const data = await request.json();
+  // Your logic here
+  return new Response(JSON.stringify({ message: "Success" }), { status: 200 });
 }
